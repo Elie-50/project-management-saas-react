@@ -32,7 +32,6 @@ const initialState: AuthState = {
   accessToken: null,
 };
 
-// Signup thunk
 export const signup = createAsyncThunk<
   { user: User },
   SignupData,
@@ -47,7 +46,6 @@ export const signup = createAsyncThunk<
   }
 });
 
-// Login thunk
 export const login = createAsyncThunk<
   { accessToken: string },
   { email: string; password: string },

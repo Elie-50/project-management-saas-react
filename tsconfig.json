@@ -9,6 +9,12 @@
     }
   ],
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "target": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

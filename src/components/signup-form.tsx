@@ -34,7 +34,7 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<"div">) {
   const dispatch = useAppDispatch();
-  const { loading, error, user } = useAppSelector((state) => state.auth);
+  const { loading, error } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<SignUpFormData>({
@@ -68,7 +68,6 @@ export function SignupForm({
 
   return (
     <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
-      {user && <p>{JSON.stringify(user)}</p>}
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create your account</CardTitle>
@@ -80,7 +79,7 @@ export function SignupForm({
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="username">Userame</FieldLabel>
+                <FieldLabel htmlFor="username">Username</FieldLabel>
                 <Input
                   id="username"
                   type="text"
