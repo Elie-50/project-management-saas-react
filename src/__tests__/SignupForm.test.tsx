@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import '@testing-library/jest-dom';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { SignupForm } from "@/components/signup-form";
 import * as authSlice from "@/redux/auth/authSlice";
 import * as reduxHooks from "@/redux/hooks";
 import { useNavigate } from "react-router";
+import type { RootState } from "@/redux/store";
 
 jest.mock("react-router", () => ({
   useNavigate: jest.fn(),
@@ -22,7 +23,7 @@ describe("SignupForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: null, accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     jest.spyOn(authSlice, "signup").mockImplementation(() => {
@@ -108,7 +109,7 @@ describe("SignupForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: "Signup failed", accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     render(<SignupForm />);
@@ -134,7 +135,7 @@ describe("SignupForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: true, error: null, accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     render(<SignupForm />);

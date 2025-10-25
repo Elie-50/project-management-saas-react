@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
+import { API_URL } from '../urls';
 
 type User = {
   id: string;
@@ -38,7 +39,7 @@ export const signup = createAsyncThunk<
   { rejectValue: string }
 >('auth/signup', async (credentials, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:3000/auth/signup', credentials);
+    const response = await axios.post(API_URL + '/auth/signup', credentials);
     return response.data;
   } catch (err: unknown) {
     const error = err as AxiosError<{ message?: string }>
@@ -52,7 +53,7 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async (credentials, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:3000/auth/login', credentials);
+    const response = await axios.post(API_URL + '/auth/login', credentials);
     return response.data;
   } catch (err: unknown) {
 		const error = err as AxiosError<{ message?: string }>
@@ -69,6 +70,9 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.error = null;
       localStorage.removeItem('accessToken');
+    },
+    resetAccessToken(state) {
+      state.accessToken = localStorage.getItem('accessToken');
     },
   },
   extraReducers: (builder) => {
@@ -103,5 +107,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetAccessToken } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,6 +5,7 @@ import { LoginForm } from "@/components/login-form";
 import * as authSlice from "@/redux/auth/authSlice";
 import * as reduxHooks from "@/redux/hooks";
 import { useNavigate } from "react-router";
+import type { RootState } from "@/redux/store";
 
 jest.mock("react-router", () => ({
   useNavigate: jest.fn(),
@@ -24,7 +25,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: null, accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     jest.spyOn(authSlice, "login").mockImplementation(() => {
@@ -92,7 +93,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: "Invalid credentials", accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     render(<LoginForm />);
@@ -118,7 +119,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: true, error: null, accessToken: null, user: null },
-      })
+      } as RootState)
     );
 
     render(<LoginForm />);
