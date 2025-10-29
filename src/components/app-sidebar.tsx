@@ -44,6 +44,10 @@ const data = {
           url: "#",
         },
         {
+          title: "Users",
+          url: "/users",
+        },
+        {
           title: "Limits",
           url: "#",
         },

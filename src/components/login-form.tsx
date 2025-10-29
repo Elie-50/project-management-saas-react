@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { login } from "@/redux/auth/authSlice"
 import { useNavigate } from "react-router"
 import ErrorMessage from "./ErrorMessage"
+import { getMe } from "@/redux/users/meSlice"
 
 type LoginFormData = {
   email: string;
@@ -31,6 +32,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const dispatch = useAppDispatch();
   const { loading, error, accessToken } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.me);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<LoginFormData>({
@@ -56,9 +58,15 @@ export function LoginForm({
 
   useEffect(() => {
     if(accessToken || localStorage.getItem('accessToken')) {
+      dispatch(getMe());
+    }
+  }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    if (user) {
       navigate('/');
     }
-  }, [navigate, accessToken]);
+  }, [user, navigate]);
   
   return (
     <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>

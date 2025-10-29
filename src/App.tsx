@@ -4,6 +4,7 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import SidebarLayout from './components/SidebarLayout';
 import Dashboard from './pages/Dashboard';
+import UserSearch from './pages/UserSearch';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path='/signup' element={<SignUpPage />} />
           <Route element={<SidebarLayout />} >
             <Route path='/' element={<Dashboard />} />
+            <Route path='/users' element={<UserSearch />} />
           </Route>
         </Routes>
       </Router>

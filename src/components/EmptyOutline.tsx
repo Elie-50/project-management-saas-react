@@ -1,6 +1,4 @@
 import { Building2 } from 'lucide-react'
-
-import { Button } from "@/components/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -9,7 +7,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { OrganizationDialog } from './OrganizationDialog'
 
 export function EmptyOutline() {
   return (
@@ -24,11 +21,7 @@ export function EmptyOutline() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-				<OrganizationDialog trigger={
-					<Button variant="outline" size="sm">
-						Create Organization
-					</Button>
-				} />
+				
       </EmptyContent>
     </Empty>
   )
