@@ -25,6 +25,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: null, accessToken: null, user: null },
+        me: { user: null },
       } as RootState)
     );
 
@@ -93,6 +94,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: false, error: "Invalid credentials", accessToken: null, user: null },
+        me: { user: null },
       } as RootState)
     );
 
@@ -119,6 +121,7 @@ describe("LoginForm", () => {
     jest.spyOn(reduxHooks, "useAppSelector").mockImplementation((selector) =>
       selector({
         auth: { loading: true, error: null, accessToken: null, user: null },
+        me: { user: null },
       } as RootState)
     );
 

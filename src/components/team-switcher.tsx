@@ -19,11 +19,13 @@ import { OrganizationDialog } from "./OrganizationDialog"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { findAllOrganization, setSelectedOrganization } from "@/redux/organizations/organizationSlice"
 import type { Organization } from "@/redux/organizations/organizationSlice"
+import { findAllMemberships } from "@/redux/organizations/membershipSlice"
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const dispatch = useAppDispatch();
   const { organizations, selected, error, loading } = useAppSelector((state) => state.organization);
+  const { memberships } = useAppSelector((state) => state.membership);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   
   const [openDialogOrgId, setOpenDialogOrgId] = useState<string | 'add' | null>(null);
@@ -42,6 +44,7 @@ export function TeamSwitcher() {
 
   useEffect(() => {
     dispatch(findAllOrganization());
+    dispatch(findAllMemberships());
   }, [dispatch])
 
   const selectOrganization = (org: Organization) => {
@@ -121,6 +124,30 @@ export function TeamSwitcher() {
                 </div>
                 <div className="text-muted-foreground font-medium">Add organization</div>
               </DropdownMenuItem>
+              {
+                memberships.length > 0 &&
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-muted-foreground text-xs">
+                    Memberships
+                  </DropdownMenuLabel>
+                  {memberships.map((membership) => (
+                    <div key={membership.id} className="relative">
+                      <DropdownMenuItem
+                        data-testid="memberships-list"
+                        onSelect={() => {
+                          dispatch(setSelectedOrganization(membership.organization as Organization));
+                        }}
+                      >
+                        <div className="flex size-6 items-center justify-center rounded-md border">
+                          <GalleryVerticalEnd className="size-3.5 shrink-0" />
+                        </div>
+                        {membership.organization.name}
+                      </DropdownMenuItem>
+                    </div>
+                  ))}
+                </>
+              }
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>

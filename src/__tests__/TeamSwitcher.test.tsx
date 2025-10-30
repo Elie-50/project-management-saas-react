@@ -5,6 +5,7 @@ import { TeamSwitcher } from '@/components/team-switcher';
 import * as reduxHooks from '@/redux/hooks';
 import * as organizationSlice from '@/redux/organizations/organizationSlice';
 import { OrganizationDialog } from '@/components/OrganizationDialog';
+import type { RootState } from '@/redux/store';
 
 jest.mock('@/components/OrganizationDialog', () => ({
   OrganizationDialog: jest.fn(() => <div data-testid="org-dialog">Org Dialog</div>),
@@ -51,7 +52,8 @@ describe('TeamSwitcher', () => {
           error: null,
           loading: false,
         },
-      } as any)
+        membership: { memberships: [] },
+      } as unknown as RootState)
     );
   });
 
@@ -123,11 +125,31 @@ describe('TeamSwitcher', () => {
           error: 'Something went wrong',
           loading: false,
         },
-      } as any)
+        membership: { memberships: [] },
+      } as unknown as RootState)
     );
 
     const { container } = render(<TeamSwitcher />);
     expect(container.firstChild).toBeNull();
+  });
+
+  it('renders list of memberships in dropdown', () => {
+    jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
+      selector({
+        organization: {
+          selected: null,
+          organizations: [],
+          error: null,
+          loading: false,
+        },
+        membership: { memberships: [ { id: '1', organization: { id: '2', name: 'Org-1' }}] },
+      } as unknown as RootState)
+    );
+
+    render(<TeamSwitcher />);
+    const items = screen.getAllByTestId('memberships-list');
+    expect(items).toHaveLength(1);
+    expect(items[0]).toHaveTextContent('Org-1');
   });
 
 	it('closes the dialog when onOpenChange(false) is called', async () => {

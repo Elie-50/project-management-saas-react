@@ -24,7 +24,7 @@ function SearchInput({ name, setName }: Props) {
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        <InputGroupAddon align="inline-end">{data.total} results</InputGroupAddon>
+        <InputGroupAddon align="inline-end">{data?.total || 0} results</InputGroupAddon>
       </InputGroup>
 		</div>
 	)

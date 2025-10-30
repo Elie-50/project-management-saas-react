@@ -6,10 +6,12 @@ import SearchInput from "@/components/SearchInput";
 import { useDebounce } from "use-debounce";
 import UserListItem from "@/components/UserListItem";
 import { Paginator } from "@/components/Paginator";
+import { findAllOrgMembers } from "@/redux/organizations/membershipSlice";
 
 function UserSearch() {
 	const dispatch = useAppDispatch();
 	const { data, loading } = useAppSelector((state) => state.usersSearch);
+	const { selected } = useAppSelector((state) => state.organization);
 
 	const [searchParams] = useSearchParams();
 	const paramsName = searchParams.get("q") || '';
@@ -25,7 +27,13 @@ function UserSearch() {
 		if (debouncedName || debouncedName.length == 0) {
 			navigate(`/users?q=${debouncedName}&page=${page}`);
 		}
-	}, [debouncedName, navigate, page])
+	}, [debouncedName, navigate, page]);
+
+	useEffect(() => {
+		if (selected) {
+			dispatch(findAllOrgMembers(selected.id))
+		}
+	}, [dispatch, selected]);
 
 	const handleChangeName = (newVal: string) => {
 		setName(newVal);
