@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SidebarLayout from './components/SidebarLayout';
 import Dashboard from './pages/Dashboard';
 import UserSearch from './pages/UserSearch';
+import Project from './pages/Project';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route element={<SidebarLayout />} >
             <Route path='/' element={<Dashboard />} />
             <Route path='/users' element={<UserSearch />} />
+            <Route path='/projects/:id' element={<Project />} />
           </Route>
         </Routes>
       </Router>
