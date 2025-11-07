@@ -8,9 +8,9 @@ import { addMemberToOrganization, removeFromOrganization } from "@/redux/organiz
 function UserListItem({ user }: { user: User }) {
 	const dispatch = useAppDispatch();
 	const { selected } = useAppSelector((state) => state.organization);
-	const { membersIds } = useAppSelector((state) => state.membership);
+	const { members } = useAppSelector((state) => state.membership);
 
-	const exists = membersIds.some(id => user.id === id)
+	const exists = members.some(mem => user.id === mem.id)
 
 	const addToOrg = () => {
 		dispatch(addMemberToOrganization({ userId: user.id, orgId: selected?.id as string }))

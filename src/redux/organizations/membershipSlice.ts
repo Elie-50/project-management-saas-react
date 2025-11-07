@@ -7,28 +7,29 @@ import type { User } from '../users/meSlice';
 type UserMembership = {
 	id: string;
 	organization: Organization;
-	joinedAt: Date;
+	joinedAt: Date | string;
 };
 
 type OrganizationMembers = {
   id: string;
   username: string;
-  email: string;
-  joinedAt: string;
+  firstName: string;
+  lastName: string;
+  joinedAt: Date | string;
 };
 
 type MembershipState = {
   memberships: UserMembership[];
   loading: boolean;
   error: string | null;
-  membersIds: string[];
+  members: OrganizationMembers[];
 };
 
 const initialState: MembershipState = {
   memberships: [],
   loading: false,
   error: null,
-  membersIds: [],
+  members: [],
 };
 
 export const findAllMemberships = createAsyncThunk<
@@ -81,13 +82,12 @@ export const addMemberToOrganization = createAsyncThunk<
 });
 
 export const removeFromOrganization = createAsyncThunk<
-  string,
+  void,
   { userId: string; orgId: string },
   { rejectValue: string }
 >('membership/remove', async ({ userId, orgId }, { rejectWithValue }) => {
   try {
     await api.delete(`/organizations/${orgId}/members/${userId}`,);
-    return userId;
   } catch (err: unknown) {
 		const error = err as AxiosError<{ message?: string }>
     return rejectWithValue(error.response?.data?.message || 'Failed to add user to organizations');
@@ -125,7 +125,13 @@ const membershipSlice = createSlice({
       })
       .addCase(addMemberToOrganization.fulfilled, (state, action) => {
         state.loading = false;
-        state.membersIds.push(action.payload.user.id)
+        state.members.push({
+          id: action.payload.user.id,
+          username: action.payload.user.username,
+          firstName: action.payload.user.firstName,
+          lastName: action.payload.user.lastName,
+          joinedAt: action.payload.joinedAt
+        })
       })
       .addCase(addMemberToOrganization.rejected, (state, action) => {
         state.loading = false;
@@ -138,7 +144,7 @@ const membershipSlice = createSlice({
       })
       .addCase(removeFromOrganization.fulfilled, (state, action) => {
         state.loading = false;
-        state.membersIds = state.membersIds.filter(id => id !== action.payload)
+        state.members = state.members.filter(member => member.id !== action.meta.arg.userId)
       })
       .addCase(removeFromOrganization.rejected, (state, action) => {
         state.loading = false;
@@ -151,7 +157,7 @@ const membershipSlice = createSlice({
       })
       .addCase(findAllOrgMembers.fulfilled, (state, action) => {
         state.loading = false;
-        state.membersIds = action.payload.map((m) => m.id);
+        state.members = action.payload;
       })
       .addCase(findAllOrgMembers.rejected, (state, action) => {
         state.loading = false;

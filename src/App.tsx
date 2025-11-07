@@ -6,6 +6,7 @@ import SidebarLayout from './components/SidebarLayout';
 import Dashboard from './pages/Dashboard';
 import UserSearch from './pages/UserSearch';
 import Project from './pages/Project';
+import TaskFormPage from './pages/TaskFormPage';
 
 function App() {
 
@@ -18,7 +19,9 @@ function App() {
           <Route element={<SidebarLayout />} >
             <Route path='/' element={<Dashboard />} />
             <Route path='/users' element={<UserSearch />} />
-            <Route path='/projects/:id' element={<Project />} />
+            <Route path='/projects/:id/tasks' element={<Project />} />
+            <Route path='/projects/:projectId/new-task' element={<TaskFormPage />} />
+            <Route path='/projects/:projectId/edit-task/:taskId' element={<TaskFormPage />} />
           </Route>
         </Routes>
       </Router>

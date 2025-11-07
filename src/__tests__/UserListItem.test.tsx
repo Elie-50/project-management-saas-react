@@ -43,7 +43,7 @@ describe('UserListItem', () => {
     jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
       selector({
         organization: { selected: { id: 'org-1' } },
-        membership: { membersIds: [] },
+        membership: { members: [] },
       } as unknown as RootState)
     );
 
@@ -59,7 +59,7 @@ describe('UserListItem', () => {
     jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
       selector({
         organization: { selected: { id: 'org-1' } },
-        membership: { membersIds: [] },
+        membership: { members: [] },
       } as unknown as RootState)
     );
 
@@ -73,7 +73,7 @@ describe('UserListItem', () => {
     jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
       selector({
         organization: { selected: { id: 'org-1' } },
-        membership: { membersIds: ['user-1'] },
+        membership: { members: [{ id: 'user-1' }] },
       } as unknown as RootState)
     );
 
@@ -92,7 +92,7 @@ describe('UserListItem', () => {
     jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
       selector({
         organization: { selected: { id: 'org-1' } },
-        membership: { membersIds: [] },
+        membership: { members: [] },
       } as unknown as RootState)
     );
 
@@ -115,7 +115,7 @@ describe('UserListItem', () => {
     jest.spyOn(reduxHooks, 'useAppSelector').mockImplementation((selector) =>
       selector({
         organization: { selected: { id: 'org-1' } },
-        membership: { membersIds: ['user-1'] },
+        membership: { members: [{ id: 'user-1' }] },
       } as unknown as RootState)
     );
 
