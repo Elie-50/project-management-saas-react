@@ -5,6 +5,7 @@ import meReducer from './users/meSlice'
 import membershipsReducer from './organizations/membershipSlice'
 import usersSearchReducer from './users/searchSlice'
 import projectsReducer from './projects/projectSlice'
+import tasksReducer from './tasks/taskSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     membership: membershipsReducer,
     usersSearch: usersSearchReducer,
     projects: projectsReducer,
+    tasks: tasksReducer,
   },
 });
 

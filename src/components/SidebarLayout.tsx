@@ -1,5 +1,5 @@
 import { AppSidebar } from './app-sidebar'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import { Toaster } from 'sonner'
 import { Separator } from "@/components/ui/separator"
 import {
@@ -7,8 +7,28 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useEffect } from 'react'
+import { getMe } from "@/redux/users/meSlice"
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 function SidebarLayout() {
+  const { accessToken } = useAppSelector((state) => state.auth);
+  const { error } = useAppSelector((state) => state.me);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(accessToken || localStorage.getItem('accessToken')) {
+      dispatch(getMe());
+    }
+  }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    if(error) {
+      navigate('/login');
+    }
+  }, [error, navigate])
+
 	return (
 		<SidebarProvider className='h-full'>
 			<AppSidebar />

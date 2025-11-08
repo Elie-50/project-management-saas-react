@@ -114,7 +114,7 @@ export function NavProjects() {
           item.id !== editingId &&
           <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild>
-              <a href={`/projects/${item.id}`}>
+              <a href={`/projects/${item.id}/tasks`}>
                 <span>{item.name}</span>
               </a>
             </SidebarMenuButton>
