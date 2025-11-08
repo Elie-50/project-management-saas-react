@@ -25,24 +25,20 @@ function Project() {
 
       <Separator />
 
-      {/* Loading state */}
       {loading && (
         <p className="text-muted-foreground">Loading tasks...</p>
       )}
 
-      {/* Empty state */}
       {!loading && tasks?.length === 0 && (
         <p className="text-muted-foreground">No tasks found for this project.</p>
       )}
 
-      {/* Task list */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tasks?.map((task) => (
           <TaskItem key={task.id} task={task} projectId={id!} />
         ))}
       </div>
 
-      {/* Floating Action Button */}
       <FAB to={`/projects/${id}/new-task`} />
     </div>
   )

@@ -23,7 +23,7 @@ export function FAB({ to }: { to: string }) {
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Add New</p>
+          <p>Add New Task</p>
         </TooltipContent>
       </Tooltip>
     </div>
